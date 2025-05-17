@@ -1,0 +1,91 @@
+/* 输入框渐变边框样式 */
+.gradient-input-container {
+  position: relative;
+  width: 550px;
+  height: auto;
+  min-height: 40px;
+  border-radius: 15px;
+  overflow: visible;
+  z-index: 0;
+}
+
+.gradient-border-effect {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: 15px;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    #291151 0%,
+    #3E1B70 25%,
+    #5F26B4 50%,
+    #8E4FE0 75%,
+    #291151 100%
+  );
+  background-size: 400% 400%;
+  animation: flow 8s linear infinite;
+}
+
+/* 移除双流动效果，只保留一个方向 */
+.gradient-border-effect-reverse {
+  display: none;
+}
+
+.input-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  border-radius: 15px;
+  padding: 1px;
+  z-index: 1;
+}
+
+.input-area {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* 毛玻璃效果 */
+.glassmorphism {
+  background: rgba(62, 27, 112, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 8px;
+  border: 1px solid rgba(142, 79, 224, 0.2);
+}
+
+/* 控件选择器样式 */
+.model-selector-container {
+  background-color: #444444;
+  border-radius: 8px;
+  padding: 2px 8px;
+}
+
+@keyframes flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

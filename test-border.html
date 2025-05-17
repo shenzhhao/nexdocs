@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试渐变边框效果</title>
+  <style>
+    body {
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    
+    .flowing-border {
+      position: relative;
+      width: 550px;
+      height: 150px;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    
+    .flowing-border::before,
+    .flowing-border::after {
+      content: "";
+      position: absolute;
+      inset: -5px;
+      background: conic-gradient(
+        from 0deg at 50% 50%,
+        #291151 0%,
+        #3E1B70 25%,
+        #5F26B4 50%,
+        #8E4FE0 75%,
+        #291151 100%
+      );
+      z-index: -1;
+      border-radius: 20px;
+    }
+    
+    .flowing-border::before {
+      animation: rotate 4s linear infinite;
+      filter: blur(1px);
+    }
+    
+    .flowing-border::after {
+      animation: rotate 4s linear infinite reverse;
+      opacity: 0.7;
+      filter: blur(2px);
+    }
+    
+    .inner-content {
+      position: absolute;
+      inset: 2px;
+      background: #000;
+      border-radius: 13px;
+      z-index: 0;
+    }
+    
+    .input-area {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+    
+    textarea {
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      font-size: 16px;
+      padding: 10px;
+      resize: none;
+    }
+    
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="flowing-border">
+    <div class="inner-content"></div>
+    <div class="input-area">
+      <textarea placeholder="你可以在这里输入任何你想解析的prd..."></textarea>
+    </div>
+  </div>
+</body>
+</html>

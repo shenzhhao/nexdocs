@@ -1,0 +1,60 @@
+/* 流动渐变边框效果 */
+.flowing-gradient-border-double {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.flowing-gradient-border-double::before,
+.flowing-gradient-border-double::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    #291151 0%,
+    #3E1B70 25%,
+    #5F26B4 50%,
+    #8E4FE0 75%,
+    #291151 100%
+  );
+  z-index: -1;
+  border-radius: 20px;
+}
+
+.flowing-gradient-border-double::before {
+  animation: rotate 4s linear infinite;
+  filter: blur(1px);
+}
+
+.flowing-gradient-border-double::after {
+  animation: rotate 4s linear infinite reverse;
+  opacity: 0.7;
+  filter: blur(2px);
+}
+
+.flowing-gradient-border-double .inner-content {
+  position: absolute;
+  inset: 2px;
+  background: #000;
+  border-radius: 13px;
+  z-index: 0;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 输入框内部黑色背景 */
+.input-container {
+  background-color: #000000 !important;
+  border-radius: 14px;
+  position: relative;
+  z-index: 1;
+}

@@ -1,11 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{js,jsx}",
-    "./components/**/*.{js,jsx}",
-    "./app/**/*.{js,jsx}",
-    "./src/**/*.{js,jsx}",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   prefix: "",
   theme: {
@@ -51,6 +49,20 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        gray: {
+          50: '#F8F9FA',
+          100: '#F4F5F7',
+          200: '#ECEEF1',
+          300: '#B8BBBE',
+          400: '#94979D',
+          500: '#646971',
+          700: '#343B45',
+          900: '#111925',
+        },
+        blue: {
+          100: '#E2EEFF',
+          600: '#0E65E8',
+        }
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -71,7 +83,10 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      fontFamily: {
+        dingtalk: ['DingTalk JinBuTi', 'system-ui', '-apple-system', 'sans-serif'],
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 };

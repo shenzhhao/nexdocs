@@ -1,0 +1,42 @@
+.shiny-text-container {
+  position: relative;
+  display: inline-block;
+  padding: 3px 15px;
+  cursor: pointer;
+  font-weight: 400; /* 将字体粗细从600改为400，使字体更细 */
+  text-align: center; /* 确保文字居中 */
+}
+
+/* 闪亮效果层 */
+.shine-effect {
+  position: relative; /* 改为相对定位，不再是绝对定位 */
+  color: rgba(255, 255, 255, 0.3); /* 设置文字颜色为白色，透明度30% */
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.3); /* 设置文字填充颜色为白色，透明度30% */
+  text-fill-color: rgba(255, 255, 255, 0.3); /* 设置文字填充颜色为白色，透明度30% */
+  animation: shine 5s linear infinite;
+  display: inline-block; /* 确保正确显示 */
+  font-weight: 400; /* 将字体粗细从600改为400，使字体更细 */
+}
+
+.shine-effect.disabled {
+  animation: none;
+  opacity: 0.6;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: -100%;
+  }
+}

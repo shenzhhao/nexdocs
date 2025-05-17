@@ -1,0 +1,44 @@
+/* 主标题效果 */
+.reflect-title {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1.2;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.9) 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine 5s linear infinite;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  letter-spacing: -0.025em;
+  margin-bottom: 1rem;
+}
+
+/* 副标题效果 */
+.reflect-subtitle {
+  font-size: 1rem; /* 从1.25rem减小到1rem */
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  margin-bottom: 2rem;
+  max-width: 42rem; /* 增加最大宽度，使内容能够单行展示 */
+  text-align: center;
+  white-space: nowrap; /* 强制单行显示 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  text-overflow: ellipsis; /* 溢出时显示省略号 */
+}
+
+@keyframes shine {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}

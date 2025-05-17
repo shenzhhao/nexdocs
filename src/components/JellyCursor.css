@@ -1,0 +1,44 @@
+.custom-cursor {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  will-change: transform;
+  box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5);
+}
+
+.custom-cursor.hovering {
+  width: 15px;
+  height: 15px;
+  transition: width 0.3s, height 0.3s;
+}
+
+/* 添加一个尾巴效果 */
+.custom-cursor::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.7;
+  filter: blur(1px);
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Hide the default cursor when jelly cursor is active */
+body.jelly-cursor-active {
+  cursor: none;
+}
+
+/* Make sure the cursor is visible on all elements */
+body.jelly-cursor-active * {
+  cursor: none !important;
+}

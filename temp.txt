@@ -1,0 +1,8 @@
+                <div className="relative">
+                  {/* 使用渐变边框+白色毛玻璃效果 */}
+                  <div className="w-[550px] relative gradient-border">
+                    <div
+                      className="w-full h-full rounded-[14px] relative overflow-hidden transition-all duration-300 backdrop-blur-md"
+                      onMouseEnter={() => setIsInputHovered(true)}
+                      onMouseLeave={() => setIsInputHovered(false)}
+                    >

@@ -1,0 +1,10 @@
+.waves {
+  z-index: 0;
+  pointer-events: none;
+}
+
+.waves-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
