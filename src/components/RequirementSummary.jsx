@@ -1,18 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { generateSummary } from '../services/aiService';
 
-const RequirementSummary = ({ prdContent, onReset }) => {
+const RequirementSummary = ({ prdContent, onReset, cachedResult }) => {
   const [summary, setSummary] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [conciseSummary, setConciseSummary] = useState('');
 
   useEffect(() => {
-    // 如果有PRD内容，则自动生成摘要
+    // 如果有缓存的结果，直接使用
+    if (cachedResult) {
+      console.log('使用缓存的需求摘要结果');
+      setSummary(cachedResult);
+
+      // 提取简洁摘要（第一段或第一句话）
+      const firstParagraph = cachedResult.split('\n\n')[0];
+      if (firstParagraph) {
+        // 移除Markdown标记
+        const cleanParagraph = firstParagraph.replace(/^#+\s+.+\n/, '').trim();
+        setConciseSummary(cleanParagraph);
+      }
+      return;
+    }
+
+    // 如果有PRD内容但没有缓存结果，则自动生成摘要
     if (prdContent) {
       generateRequirementSummary();
     }
-  }, [prdContent]);
+  }, [prdContent, cachedResult]);
 
   const generateRequirementSummary = async () => {
     if (!prdContent) {
@@ -44,22 +59,22 @@ const RequirementSummary = ({ prdContent, onReset }) => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-6 bg-black">
+      <div className="flex flex-col items-center justify-center h-full p-6">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
-        <p className="text-gray-400">正在生成需求摘要，请稍候...</p>
+        <p className="text-white">正在生成需求摘要，请稍候...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-6 bg-black">
+      <div className="flex flex-col items-center justify-center h-full p-6">
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
           <p>{error}</p>
         </div>
         <button
           onClick={generateRequirementSummary}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          className="px-4 py-2 bg-gradient-to-r from-[#3E1B70] to-[#5F26B4] text-white rounded-[10px] hover:opacity-90 transition-opacity"
         >
           重试
         </button>
@@ -69,11 +84,11 @@ const RequirementSummary = ({ prdContent, onReset }) => {
 
   if (!summary) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-6 bg-black">
-        <p className="text-gray-400 mb-4">尚未生成需求摘要</p>
+      <div className="flex flex-col items-center justify-center h-full p-6">
+        <p className="text-white mb-4">尚未生成需求摘要</p>
         <button
           onClick={generateRequirementSummary}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          className="px-4 py-2 bg-gradient-to-r from-[#3E1B70] to-[#5F26B4] text-white rounded-[10px] hover:opacity-90 transition-opacity"
         >
           开始生成
         </button>
@@ -85,34 +100,42 @@ const RequirementSummary = ({ prdContent, onReset }) => {
   const paragraphs = summary.split('\n\n').filter(p => p.trim());
 
   return (
-    <div className="container mx-auto p-6 bg-black">
+    <div className="container mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6 text-center text-white">需求摘要</h2>
 
-      {/* 简洁摘要卡片 */}
+      {/* Linear风格的简洁摘要卡片 */}
       {conciseSummary && (
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg shadow-md p-6 mb-6 border border-blue-100">
-          <h3 className="text-lg font-semibold text-blue-800 mb-2">一句话摘要</h3>
-          <p className="text-gray-700 text-lg">{conciseSummary}</p>
+        <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl shadow-lg p-6 mb-6">
+          <h3 className="text-sm font-medium text-white/70 uppercase tracking-wider mb-3">一句话摘要</h3>
+          <p className="text-white text-lg font-medium leading-relaxed">{conciseSummary}</p>
         </div>
       )}
 
-      {/* 详细摘要内容 */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="prose max-w-none">
+      {/* Linear风格的详细摘要内容 */}
+      <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl shadow-lg p-6">
+        <div className="space-y-6">
           {paragraphs.map((paragraph, index) => {
             // 检查是否是标题行
             if (paragraph.startsWith('#')) {
               const level = paragraph.match(/^#+/)[0].length;
               const title = paragraph.replace(/^#+\s+/, '');
-              const titleClass = level === 1 ? 'text-2xl font-bold mt-6 mb-4' :
-                                level === 2 ? 'text-xl font-semibold mt-5 mb-3' :
-                                'text-lg font-medium mt-4 mb-2';
-              return <h3 key={index} className={titleClass}>{title}</h3>;
+
+              if (level === 1) {
+                return <h3 key={index} className="text-xl font-semibold text-white/90 mt-8 mb-4">{title}</h3>;
+              } else if (level === 2) {
+                return <h4 key={index} className="text-base font-medium text-white/90 mt-6 mb-3">{title}</h4>;
+              } else {
+                return <h5 key={index} className="text-sm font-medium text-white/80 uppercase tracking-wider mt-4 mb-2">{title}</h5>;
+              }
             }
 
             // 检查是否是编号列表
             if (/^\d+\./.test(paragraph)) {
-              return <h3 key={index} className="text-lg font-semibold mt-4 mb-2">{paragraph}</h3>;
+              const items = paragraph.split('\n').filter(item => item.trim());
+              if (items.length === 1) {
+                // 单个编号项作为小标题
+                return <h5 key={index} className="text-sm font-medium text-white/80 uppercase tracking-wider mt-4 mb-2">{paragraph}</h5>;
+              }
             }
 
             // 检查是否是列表项
@@ -124,26 +147,36 @@ const RequirementSummary = ({ prdContent, onReset }) => {
 
               if (isNumberedList) {
                 return (
-                  <ol key={index} className="list-decimal pl-5 mt-2 mb-4">
-                    {listItems.map((item, i) => (
-                      <li key={i} className="mb-2">{item.replace(/^\d+\.\s*/, '')}</li>
-                    ))}
-                  </ol>
+                  <div key={index} className="space-y-2 mt-2">
+                    {listItems.map((item, i) => {
+                      const number = item.match(/^\d+/)[0];
+                      const text = item.replace(/^\d+\.\s*/, '');
+                      return (
+                        <div key={i} className="flex items-start">
+                          <span className="text-white/50 text-sm font-medium mr-3 mt-0.5 w-5 text-right">{number}.</span>
+                          <span className="text-white/90 text-sm">{text}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
                 );
               }
 
-              // 普通列表
+              // 普通列表 (Linear风格的点状列表)
               return (
-                <ul key={index} className="list-disc pl-5 mt-2 mb-4">
+                <div key={index} className="space-y-2 mt-2">
                   {listItems.map((item, i) => (
-                    <li key={i} className="mb-2">{item.replace(/^[•\-*]\s*/, '')}</li>
+                    <div key={i} className="flex items-start">
+                      <span className="text-white/50 mr-3 mt-1.5">•</span>
+                      <span className="text-white/90 text-sm">{item.replace(/^[•\-*]\s*/, '')}</span>
+                    </div>
                   ))}
-                </ul>
+                </div>
               );
             }
 
-            // 普通段落
-            return <p key={index} className="mb-4 text-gray-700">{paragraph}</p>;
+            // 普通段落 (Linear风格的段落)
+            return <p key={index} className="text-white/80 text-sm leading-relaxed">{paragraph}</p>;
           })}
         </div>
       </div>
@@ -151,13 +184,13 @@ const RequirementSummary = ({ prdContent, onReset }) => {
       <div className="mt-6 text-center">
         <button
           onClick={generateRequirementSummary}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 mr-4"
+          className="px-4 py-2 bg-gradient-to-r from-[#3E1B70] to-[#5F26B4] text-white rounded-[10px] hover:opacity-90 transition-opacity mr-4"
         >
           重新生成
         </button>
         <button
           onClick={onReset}
-          className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+          className="px-4 py-2 bg-gray-600 text-white rounded-[10px] hover:bg-gray-700"
         >
           重新上传
         </button>

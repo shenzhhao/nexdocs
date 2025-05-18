@@ -2,17 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { analyzePRD, isApiKeySet } from '../services/aiService';
 import SpotlightCard from './ui/SpotlightCard';
 
-const UECModel = ({ prdContent, onReset }) => {
+const UECModel = ({ prdContent, onReset, cachedResult }) => {
   const [uecData, setUecData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // 如果有PRD内容，则自动分析
+    // 如果有缓存的结果，直接使用
+    if (cachedResult) {
+      console.log('使用缓存的UEC模型分析结果');
+      setUecData(cachedResult);
+      return;
+    }
+
+    // 如果有PRD内容但没有缓存结果，则进行分析
     if (prdContent) {
       analyzeContent();
     }
-  }, [prdContent]);
+  }, [prdContent, cachedResult]);
 
   const analyzeContent = async () => {
     if (!prdContent) {
@@ -38,7 +45,7 @@ const UECModel = ({ prdContent, onReset }) => {
     return (
       <div className="flex flex-col items-center justify-center h-full p-6">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
-        <p className="text-gray-400">正在分析PRD，请稍候...</p>
+        <p className="text-white">正在分析PRD，请稍候...</p>
       </div>
     );
   }
@@ -62,7 +69,7 @@ const UECModel = ({ prdContent, onReset }) => {
   if (!uecData) {
     return (
       <div className="flex flex-col items-center justify-center h-full p-6">
-        <p className="text-gray-400 mb-4">尚未分析PRD</p>
+        <p className="text-white mb-4">尚未分析PRD</p>
         <button
           onClick={analyzeContent}
           className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"

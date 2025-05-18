@@ -25,6 +25,13 @@ const Index = ({ onBack }) => {
   const [historyDialogs, setHistoryDialogs] = useState([]);
   const [currentDialogId, setCurrentDialogId] = useState(null);
 
+  // 添加缓存结果状态
+  const [cachedResults, setCachedResults] = useState({
+    uec: null,
+    flowChart: null,
+    summary: null
+  });
+
   // 添加旋转动画样式
   const rotateAnimationStyle = `
     @keyframes rotate {
@@ -155,15 +162,15 @@ const Index = ({ onBack }) => {
 
     switch (activeTab) {
       case 'uec':
-        return <UECModel prdContent={prdContent} />;
+        return <UECModel prdContent={prdContent} onReset={createNewDialog} cachedResult={cachedResults.uec} />;
       case 'flow':
-        return <FlowChart prdContent={prdContent} />;
+        return <FlowChart prdContent={prdContent} onReset={createNewDialog} />;
       case 'summary':
-        return <RequirementSummary prdContent={prdContent} />;
+        return <RequirementSummary prdContent={prdContent} onReset={createNewDialog} cachedResult={cachedResults.summary} />;
       case 'collaborate':
-        return <CollaborationPage prdContent={prdContent} />;
+        return <CollaborationPage prdContent={prdContent} onReset={createNewDialog} />;
       default:
-        return <UECModel prdContent={prdContent} />;
+        return <UECModel prdContent={prdContent} onReset={createNewDialog} cachedResult={cachedResults.uec} />;
     }
   };
 
@@ -176,9 +183,9 @@ const Index = ({ onBack }) => {
       <div className="absolute inset-0" style={{ zIndex: 0 }}>
         <Aurora
           colorStops={["#0A0014", "#1E0A3C", "#4A1E96", "#7B38E0", "#A67DF2", "#E9DEFF"]}
-          amplitude={1.5}
+          amplitude={1.2}
           blend={0.9}
-          opacity={0.6}
+          opacity={0.8}
         />
       </div>
 
@@ -186,7 +193,7 @@ const Index = ({ onBack }) => {
       <PurpleGlow />
 
       {/* 侧边栏 */}
-      <div className="w-60 sidebar flex flex-col relative z-10">
+      <div className="w-60 sidebar flex flex-col relative z-10 ml-10 mt-5 mb-5 rounded-[10px] overflow-hidden bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg" style={{ backdropFilter: 'blur(20px)' }}>
         {/* 顶部标题 */}
         <div className="h-16 flex items-center px-4 border-b border-gray-800">
           <div className="flex items-center gap-2">
@@ -194,10 +201,11 @@ const Index = ({ onBack }) => {
             <h1 className="text-base font-medium text-white">NexDocs</h1>
           </div>
         </div>
+
         {/* 菜单项 */}
         <div className="flex-1 py-4 px-3 space-y-2">
           <button
-            className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 bg-gray-800 rounded-[15px] hover:bg-[#3E1B70] hover:text-white"
+            className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 bg-[#3E1B70] rounded-[15px] hover:bg-[#3E1B70] hover:text-white"
             onClick={() => {
               console.log('点击新导入标签');
               createNewDialog();
@@ -210,7 +218,7 @@ const Index = ({ onBack }) => {
           </button>
 
           <button
-            className={"w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'flow' ? 'bg-gray-800' : '')}
+            className={"w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'flow' ? 'bg-[#3E1B70]' : '')}
             onClick={() => {
               console.log('点击流程图标签');
               if (!prdContent) {
@@ -227,7 +235,7 @@ const Index = ({ onBack }) => {
           </button>
 
           <button
-            className={"w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'summary' ? 'bg-gray-800' : '')}
+            className={"w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'summary' ? 'bg-[#3E1B70]' : '')}
             onClick={() => {
               console.log('点击简洁描述标签');
               if (!prdContent) {
@@ -244,7 +252,7 @@ const Index = ({ onBack }) => {
           </button>
 
           <button
-            className={"w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'collaborate' ? 'bg-gray-800' : '')}
+            className={"w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'collaborate' ? 'bg-[#3E1B70]' : '')}
             onClick={() => {
               console.log('点击团队反馈标签');
               if (!prdContent) {
