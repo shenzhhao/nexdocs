@@ -1,0 +1,26 @@
+/* 字体定义 */
+@font-face {
+  font-family: 'MeiTuan_Type';
+  src: url('/fonts/MeiTuan_Type/MeiTuan_Type.woff2') format('woff2'),
+       url('/fonts/MeiTuan_Type/MeiTuan_Type.woff') format('woff'),
+       url('/fonts/MeiTuan_Type/MeiTuan_Type.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 使用钉钉进步体作为备用字体 */
+@font-face {
+  font-family: 'DingTalk_JinBuTi';
+  src: url('/fonts/钉钉进步体/DingTalk-JinBuTi.woff2') format('woff2'),
+       url('/fonts/钉钉进步体/DingTalk-JinBuTi.woff') format('woff'),
+       url('/fonts/钉钉进步体/DingTalk-JinBuTi.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 定义字体回退机制 */
+.meituan-font {
+  font-family: 'MeiTuan_Type', 'DingTalk_JinBuTi', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}

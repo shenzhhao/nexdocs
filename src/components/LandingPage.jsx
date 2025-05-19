@@ -52,7 +52,7 @@ const LandingPage = ({ onEnter }) => {
         console.error('重新播放失败:', err);
         setVideoError(true);
       });
-    };
+};
 
     videoElement.addEventListener('error', handleError);
     videoElement.addEventListener('canplay', handleCanPlay);
@@ -164,7 +164,7 @@ const LandingPage = ({ onEnter }) => {
 
       {/* 底部版权信息 */}
       <div className="absolute bottom-0 left-0 right-0 h-[80px] flex items-center justify-center text-white/70 text-sm z-20">
-        © 2025 设计部-基础研发平台设计中心-研发质效和信息安全产品设计组. All rights reserved.
+        © 2025 设计部/基础研发平台设计中心/研发质效和信息安全产品设计组. All rights reserved.
       </div>
     </div>
   );

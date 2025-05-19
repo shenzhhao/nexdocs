@@ -14,6 +14,7 @@ import './styles/gradientAnimation.css'; // 引入动画样式
 import './styles/flowingBorder.css'; // 引入流动边框样式
 import './styles/inputBorder.css'; // 引入输入框边框样式
 import './styles/background.css'; // 引入背景样式
+import './styles/fonts.css'; // 引入字体样式
 
 const Index = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState('uec');
@@ -398,7 +399,7 @@ const Index = ({ onBack }) => {
               <div className="w-[600px]">
                 <div className="mb-[15px]">
                   <div className="flex justify-between items-center">
-                    <h2 className="text-3xl font-medium text-white font-['MeiTuan_Type']">你好，PRD请尽管扔给我</h2>
+                    <h2 className="text-3xl font-medium text-white meituan-font">你好，PRD请尽管扔给我</h2>
                     <button
                       onClick={importSamplePrd}
                       className="text-[15px] px-[10px] py-[2px] bg-gradient-to-r from-[#3E1B70] to-[#5F26B4] text-white rounded-[10px] hover:opacity-90 transition-opacity"
