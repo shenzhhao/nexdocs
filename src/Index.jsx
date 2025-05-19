@@ -9,6 +9,7 @@ import GradientInput from './components/GradientInput';
 import PurpleGlow from './components/PurpleGlow';
 import Aurora from './components/Aurora'; // 导入Aurora组件
 import { isApiKeySet, setApiKey, setAppId } from './services/aiService';
+import { getPublicPath } from './utils/pathUtils'; // 导入公共路径函数
 import './styles/gradientAnimation.css'; // 引入动画样式
 import './styles/flowingBorder.css'; // 引入流动边框样式
 import './styles/inputBorder.css'; // 引入输入框边框样式
@@ -95,6 +96,21 @@ const Index = ({ onBack }) => {
   // 处理PRD内容导入
   const handlePrdImport = (content) => {
     setPrdContent(content);
+
+    // 创建新的历史对话记录
+    const newDialog = {
+      id: Date.now().toString(),
+      title: content.substring(0, 30) + (content.length > 30 ? '...' : ''),
+      content: content,
+      timestamp: new Date().toISOString()
+    };
+
+    // 将新对话添加到历史记录中
+    setHistoryDialogs(prev => [newDialog, ...prev]);
+
+    // 设置当前对话ID
+    setCurrentDialogId(newDialog.id);
+
     console.log('PRD内容已导入:', content.substring(0, 50) + '...');
   };
 
@@ -107,7 +123,7 @@ const Index = ({ onBack }) => {
   const handleSubmit = () => {
     if (inputValue.trim()) {
       handlePrdImport(inputValue);
-      setInputValue('');
+    setInputValue('');
     }
   };
 
@@ -148,7 +164,7 @@ const Index = ({ onBack }) => {
       setActiveTab('uec');
       console.log('加载历史对话:', dialogId);
     }
-  };
+};
 
   // 处理API密钥模态框关闭
   const handleApiKeyModalClose = () => {
@@ -198,31 +214,31 @@ const Index = ({ onBack }) => {
         <div className="h-16 flex items-center px-4 border-b border-gray-800">
           <div className="flex items-center gap-2">
             <img
-              src="/logo.svg"
+              src={getPublicPath('logo.svg')}
               alt="NexDocs Logo"
               className="w-8 h-8"
             />
             <h1 className="text-base font-medium text-white">NexDocs</h1>
           </div>
         </div>
-
         {/* 菜单项 */}
         <div className="flex-1 py-4 px-3 space-y-2">
           <button
-            className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 bg-[#3E1B70] rounded-[15px] hover:bg-[#3E1B70] hover:text-white"
+            className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 bg-[#291151] rounded-[15px] hover:bg-[#291151] hover:text-white"
             onClick={() => {
               console.log('点击新导入标签');
               createNewDialog();
             }}
           >
-            <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
-              <path d="M10 4V16M4 10H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
+            <img
+              src={getPublicPath('icons/import-icon.svg')}
+              alt="新导入"
+              className="w-4 h-4 text-current"
+            />
             <span>新导入</span>
           </button>
-
           <button
-            className={"w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'flow' ? 'bg-[#3E1B70]' : '')}
+            className={"w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'flow' ? 'bg-[#3E1B70]' : '')}
             onClick={() => {
               console.log('点击流程图标签');
               if (!prdContent) {
@@ -231,15 +247,16 @@ const Index = ({ onBack }) => {
               setActiveTab('flow');
             }}
           >
-            <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
-              <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
-              <path d="M7 7H13M7 10H13M7 13H10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
+            <img
+              src={getPublicPath('icons/flowchart-icon.svg')}
+              alt="流程图"
+              className="w-4 h-4 text-current"
+            />
             <span>流程图</span>
           </button>
 
           <button
-            className={"w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'summary' ? 'bg-[#3E1B70]' : '')}
+            className={"w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'summary' ? 'bg-[#3E1B70]' : '')}
             onClick={() => {
               console.log('点击简洁描述标签');
               if (!prdContent) {
@@ -248,15 +265,16 @@ const Index = ({ onBack }) => {
               setActiveTab('summary');
             }}
           >
-            <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
-              <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="2"/>
-              <path d="M10 7V13M7 10H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
+            <img
+              src={getPublicPath('icons/summary-icon.svg')}
+              alt="简洁描述"
+              className="w-4 h-4 text-current"
+            />
             <span>简洁描述</span>
           </button>
 
           <button
-            className={"w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'collaborate' ? 'bg-[#3E1B70]' : '')}
+            className={"w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 rounded-[15px] hover:bg-[#3E1B70] hover:text-white " + (activeTab === 'collaborate' ? 'bg-[#3E1B70]' : '')}
             onClick={() => {
               console.log('点击团队反馈标签');
               if (!prdContent) {
@@ -265,10 +283,11 @@ const Index = ({ onBack }) => {
               setActiveTab('collaborate');
             }}
           >
-            <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
-              <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
-              <path d="M7 7H13M7 10H13M7 13H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
+            <img
+              src={getPublicPath('icons/feedback-icon.svg')}
+              alt="团队反馈"
+              className="w-4 h-4 text-current"
+            />
             <span>团队反馈</span>
           </button>
 
@@ -286,26 +305,26 @@ const Index = ({ onBack }) => {
                   <path d="M8 5V11M5 8H11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
               </button>
-            </div>
+                </div>
 
             <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1">
               {historyDialogs.length > 0 ? (
                 historyDialogs.map(dialog => (
                   <div
                     key={dialog.id}
-                    className={"flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] cursor-pointer hover:bg-[#291151] hover:text-white " + (currentDialogId === dialog.id ? 'bg-gray-800' : '')}
+                    className={"flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] cursor-pointer hover:bg-[#291151] hover:text-white " + (currentDialogId === dialog.id ? 'bg-[#291151]' : '')}
                     onClick={() => loadHistoryDialog(dialog.id)}
                   >
                     <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 16 16" fill="none">
                       <path d="M3 14V2C3 1.44772 3.44772 1 4 1H12C12.5523 1 13 1.44772 13 2V14L8 11L3 14Z" stroke="currentColor" strokeWidth="1.5"/>
                     </svg>
                     <span className="truncate">{dialog.title}</span>
-                  </div>
+      </div>
                 ))
               ) : (
                 <div className="px-4 text-sm text-gray-500 italic">
                   暂无历史对话
-                </div>
+    </div>
               )}
             </div>
           </div>

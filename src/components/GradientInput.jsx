@@ -1,6 +1,7 @@
 import React from 'react';
 import ModelSelector from './ModelSelector';
 import '../styles/inputBorder.css';
+import '../styles/scrollbar.css'; // 导入自定义滚动条样式
 
 const GradientInput = ({
   value,
@@ -72,9 +73,12 @@ const GradientInput = ({
             onMouseLeave={onMouseLeave}
           >
             {/* 输入框区域 */}
-            <div className="relative" style={{ height: isHovered || value.trim() !== '' ? "110px" : "40px" }}>
+            <div className="relative" style={{
+              height: isHovered || value.trim() !== '' ? "110px" : "40px",
+              transition: "height 0.3s cubic-bezier(0.4, 0, 0.2, 1)" // 使用更平滑的缓动函数
+            }}>
               <textarea
-                className={"w-full bg-transparent rounded-[14px] focus:outline-none font-['PingFang_SC'] resize-none border-0 text-[13px] text-white transition-all duration-300 " + (
+                className={"w-full bg-transparent rounded-[14px] focus:outline-none font-['PingFang_SC'] resize-none border-0 text-[13px] text-white transition-all duration-300 ease-in-out custom-scrollbar " + (
                   isHovered || value.trim() !== ''
                     ? 'pt-[9px] px-[10px]'
                     : 'py-[9px] px-[10px]'
@@ -91,12 +95,14 @@ const GradientInput = ({
             </div>
 
             {/* 按钮区域 - 位于输入框下方，在hover或有内容时显示 */}
-            <div className={"absolute bottom-[9px] left-[10px] right-[10px] flex justify-between items-center transition-all duration-300 bg-transparent " + (
-              isHovered || value.trim() !== '' ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-            )}>
+            <div className={"absolute bottom-[9px] left-[10px] right-[10px] flex justify-between items-center transition-all duration-300 ease-in-out bg-transparent " + (
+              isHovered || value.trim() !== '' ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
+            )}
+            style={{
+              transitionDelay: isHovered ? "0.05s" : "0s" // 添加延迟，使控件在输入框展开后再显示
+            }}>
               {/* 使用ModelSelector组件 */}
-              <div className="flex items-center gap-2" style={{
-                backgroundColor: '#444444',
+              <div className="flex items-center gap-2 purple-controls" style={{
                 borderRadius: '8px',
                 padding: '2px 8px'
               }}>
@@ -106,7 +112,7 @@ const GradientInput = ({
                 />
                 <button
                   type="button"
-                  className="h-[20px] flex items-center gap-1 px-2 py-0 text-xs text-black hover:text-gray-800"
+                  className="h-[20px] flex items-center gap-1 px-2 py-0 text-xs hover:text-gray-300"
                   onClick={onSettingsClick}
                   title="设置API密钥"
                 >

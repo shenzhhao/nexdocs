@@ -1,0 +1,38 @@
+/* 自定义滚动条样式 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #111;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+/* Firefox 滚动条样式 */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #222 #111;
+}
+
+/* 紫色控件样式 */
+.purple-controls {
+  background-color: #291151 !important;
+}
+
+.purple-controls button {
+  color: white !important;
+}
+
+.purple-controls button:hover {
+  color: #A67DF2 !important;
+}
