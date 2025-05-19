@@ -2,7 +2,7 @@
   "name": "nocode-platform",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://[YOUR_GITHUB_USERNAME].github.io/nocode-platform",
+  "homepage": "https://shenzhhao.github.io/nexdocs",
   "type": "module",
   "scripts": {
     "dev": "vite",
