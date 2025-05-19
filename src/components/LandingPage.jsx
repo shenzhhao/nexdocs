@@ -150,7 +150,7 @@ const LandingPage = ({ onEnter }) => {
         />
         <h1 className="reflect-title">NexDocs</h1>
         <p className="reflect-subtitle">
-          将复杂的需求文档转化为易于理解和高效沟通的视觉化内容，帮助团队更好地理解和对齐需求
+          将复杂的需求文档转化为易于理解和高效沟通的结构化内容，帮助团队更好地理解和对齐需求
         </p>
         <div className="backdrop-blur-md bg-white/10 rounded-[10px] mt-4 hover:bg-white/20 transition-colors duration-300 border border-white/30" style={{ borderWidth: '0.5px' }}>
           <ShinyText

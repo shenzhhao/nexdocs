@@ -3,8 +3,27 @@
   font-family: 'MeiTuan_Type';
   src: url('/fonts/MeiTuan_Type/MeiTuan_Type.woff2') format('woff2'),
        url('/fonts/MeiTuan_Type/MeiTuan_Type.woff') format('woff'),
-       url('/fonts/MeiTuan_Type/MeiTuan_Type.ttf') format('truetype');
+       url('/fonts/MeiTuan_Type/MeiTuan_Type.ttf') format('truetype'),
+       url('/fonts/MeiTuan_Type/meituantype-Regular.TTF') format('truetype');
   font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 美团体粗体 */
+@font-face {
+  font-family: 'MeiTuan_Type';
+  src: url('/fonts/MeiTuan_Type/meituantype-Bold.TTF') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 美团体细体 */
+@font-face {
+  font-family: 'MeiTuan_Type';
+  src: url('/fonts/MeiTuan_Type/meituantype-Light.TTF') format('truetype');
+  font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
@@ -22,5 +41,5 @@
 
 /* 定义字体回退机制 */
 .meituan-font {
-  font-family: 'MeiTuan_Type', 'DingTalk_JinBuTi', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: 'MeiTuan_Type', 'DingTalk_JinBuTi', 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
 }

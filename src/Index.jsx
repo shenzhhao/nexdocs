@@ -239,6 +239,19 @@ const Index = ({ onBack }) => {
       {/* 添加旋转动画样式 */}
       <style dangerouslySetInnerHTML={{ __html: rotateAnimationStyle }} />
 
+      {/* 添加字体样式 */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @font-face {
+          font-family: 'MeiTuan_Type';
+          src: url('${getPublicPath("fonts/MeiTuan_Type/meituantype-Regular.TTF")}') format('truetype');
+          font-weight: normal;
+          font-style: normal;
+        }
+        .meituan-font {
+          font-family: 'MeiTuan_Type', 'DingTalk_JinBuTi', 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
+        }
+      ` }} />
+
       {/* 添加Aurora极光效果作为背景 */}
       <div className="absolute inset-0" style={{ zIndex: 0 }}>
         <Aurora
@@ -399,7 +412,7 @@ const Index = ({ onBack }) => {
               <div className="w-[600px]">
                 <div className="mb-[15px]">
                   <div className="flex justify-between items-center">
-                    <h2 className="text-3xl font-medium text-white meituan-font">你好，PRD请尽管扔给我</h2>
+                    <h2 className="text-3xl font-medium text-white meituan-font" style={{ fontFamily: "'MeiTuan_Type', 'DingTalk_JinBuTi', 'PingFang SC', 'Microsoft YaHei', sans-serif" }}>你好，PRD请尽管扔给我</h2>
                     <button
                       onClick={importSamplePrd}
                       className="text-[15px] px-[10px] py-[2px] bg-gradient-to-r from-[#3E1B70] to-[#5F26B4] text-white rounded-[10px] hover:opacity-90 transition-opacity"

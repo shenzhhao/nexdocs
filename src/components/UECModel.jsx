@@ -88,7 +88,7 @@ const UECModel = ({ prdContent, onReset, cachedResult }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* 用户 */}
-          <SpotlightCard spotlightColor="rgba(59, 130, 246, 0.3)" className="backdrop-blur-lg bg-white/40 p-0">
+          <SpotlightCard spotlightColor="rgba(59, 130, 246, 0.3)" className="backdrop-blur-lg bg-white/5 border border-white/10 shadow-lg p-0">
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-4 text-blue-600">用户 (User)</h3>
               {uecData.user && uecData.user.length > 0 ? (
@@ -107,7 +107,7 @@ const UECModel = ({ prdContent, onReset, cachedResult }) => {
           </SpotlightCard>
 
           {/* 事件 */}
-          <SpotlightCard spotlightColor="rgba(16, 185, 129, 0.3)" className="backdrop-blur-lg bg-white/40 p-0">
+          <SpotlightCard spotlightColor="rgba(16, 185, 129, 0.3)" className="backdrop-blur-lg bg-white/5 border border-white/10 shadow-lg p-0">
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-4 text-green-600">事件 (Event)</h3>
               {uecData.event && uecData.event.length > 0 ? (
@@ -126,7 +126,7 @@ const UECModel = ({ prdContent, onReset, cachedResult }) => {
           </SpotlightCard>
 
           {/* 目标 */}
-          <SpotlightCard spotlightColor="rgba(168, 85, 247, 0.3)" className="backdrop-blur-lg bg-white/40 p-0">
+          <SpotlightCard spotlightColor="rgba(168, 85, 247, 0.3)" className="backdrop-blur-lg bg-white/5 border border-white/10 shadow-lg p-0">
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-4 text-purple-600">目标 (Goal)</h3>
               {uecData.goal && uecData.goal.length > 0 ? (
