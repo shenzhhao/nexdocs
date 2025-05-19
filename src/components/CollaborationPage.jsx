@@ -56,19 +56,19 @@ const CollaborationPage = ({ prdContent, onReset }) => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6 text-center text-white">团队协作与反馈</h2>
+    <div className="container mx-auto p-6 max-w-4xl">
+      <h2 className="text-xl font-semibold mb-6 text-white text-center">团队协作与反馈</h2>
 
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <div className="flex border-b mb-4">
+      <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-[15px] shadow-lg overflow-hidden">
+        <div className="flex border-b border-white/10 mb-0">
           <button
-            className={`px-4 py-2 ${activeTab === 'comments' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-600'}`}
+            className={`px-4 py-3 text-sm ${activeTab === 'comments' ? 'border-b-2 border-purple-500 text-white' : 'text-white/60 hover:text-white/90'}`}
             onClick={() => setActiveTab('comments')}
           >
             评论 ({comments.length})
           </button>
           <button
-            className={`px-4 py-2 ${activeTab === 'tasks' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-600'}`}
+            className={`px-4 py-3 text-sm ${activeTab === 'tasks' ? 'border-b-2 border-purple-500 text-white' : 'text-white/60 hover:text-white/90'}`}
             onClick={() => setActiveTab('tasks')}
           >
             任务
@@ -77,70 +77,77 @@ const CollaborationPage = ({ prdContent, onReset }) => {
 
         {activeTab === 'comments' && (
           <>
-            <div className="mb-4">
-              <textarea
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows="3"
-                placeholder="添加评论..."
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-              ></textarea>
-              <div className="flex justify-end mt-2">
-                <button
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                  onClick={handleAddComment}
-                >
-                  发送
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {comments.map(comment => (
-                <div key={comment.id} className="p-4 bg-gray-50 rounded-lg">
-                  <div className="flex items-center mb-2">
-                    <span className="text-xl mr-2">{comment.avatar}</span>
-                    <span className="font-medium">{comment.user}</span>
-                    <span className="text-gray-500 text-sm ml-auto">{comment.timestamp}</span>
-                  </div>
-                  <p className="text-gray-700 mb-2">{comment.content}</p>
-                  <div className="flex items-center text-gray-500 text-sm">
-                    <button
-                      className="flex items-center hover:text-blue-600"
-                      onClick={() => handleLike(comment.id)}
-                    >
-                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017a2 2 0 01-1.386-.54L4.25 14.5A2 2 0 014 13.05V4a2 2 0 012-2h3a2 2 0 012 2v6h3z"></path>
-                      </svg>
-                      <span>{comment.likes}</span>
-                    </button>
-                    <button className="flex items-center ml-4 hover:text-blue-600">
-                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                      </svg>
-                      <span>回复</span>
-                    </button>
-                  </div>
+            <div className="p-5">
+              <div className="mb-4">
+                <textarea
+                  className="w-full p-3 bg-white/5 border border-white/10 rounded-[10px] focus:outline-none focus:ring-1 focus:ring-purple-500 text-white text-sm placeholder-white/40"
+                  rows="3"
+                  placeholder="添加评论..."
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                ></textarea>
+                <div className="flex justify-end mt-2">
+                  <button
+                    className="px-3 py-1.5 bg-gradient-to-r from-[#3E1B70] to-[#5F26B4] text-white text-sm rounded-[8px] hover:opacity-90 transition-opacity"
+                    onClick={handleAddComment}
+                  >
+                    发送
+                  </button>
                 </div>
-              ))}
+              </div>
+
+              <div className="space-y-3">
+                {comments.map(comment => (
+                  <div key={comment.id} className="p-3 bg-white/5 border border-white/10 rounded-[10px] hover:bg-white/[0.07] transition-colors">
+                    <div className="flex items-center mb-2">
+                      <span className="text-xl mr-2">{comment.avatar}</span>
+                      <span className="font-medium text-white text-sm">{comment.user}</span>
+                      <span className="text-white/40 text-xs ml-auto">{comment.timestamp}</span>
+                    </div>
+                    <p className="text-white/80 text-sm mb-2">{comment.content}</p>
+                    <div className="flex items-center text-white/40 text-xs">
+                      <button
+                        className="flex items-center hover:text-purple-400 transition-colors"
+                        onClick={() => handleLike(comment.id)}
+                      >
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017a2 2 0 01-1.386-.54L4.25 14.5A2 2 0 014 13.05V4a2 2 0 012-2h3a2 2 0 012 2v6h3z"></path>
+                        </svg>
+                        <span>{comment.likes}</span>
+                      </button>
+                      <button className="flex items-center ml-4 hover:text-purple-400 transition-colors">
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                        <span>回复</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </>
         )}
 
         {activeTab === 'tasks' && (
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <p className="text-gray-700">任务功能正在开发中...</p>
+          <div className="p-5">
+            <div className="p-3 bg-white/5 border border-white/10 rounded-[10px]">
+              <p className="text-white/60 text-sm">任务功能正在开发中...</p>
+            </div>
           </div>
         )}
-      </div>
 
-      <div className="mt-6 flex justify-center">
-        <button
-          onClick={onReset}
-          className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
-        >
-          重新上传
-        </button>
+        {/* Linear风格的底部分隔线和按钮区域 */}
+        <div className="border-t border-white/10 p-4 bg-white/[0.03]">
+          <div className="flex justify-center">
+            <button
+              onClick={onReset}
+              className="px-3 py-1.5 bg-white/10 text-white text-sm rounded-[8px] hover:bg-white/15 transition-colors"
+            >
+              重新上传
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -28,6 +28,11 @@ const LandingPage = ({ onEnter }) => {
 
       {/* 内容区域 */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
+        <img
+          src="/logo.svg"
+          alt="NexDocs Logo"
+          className="w-20 h-20 mb-2"
+        />
         <h1 className="reflect-title">NexDocs</h1>
         <p className="reflect-subtitle">
           将复杂的需求文档转化为易于理解和高效沟通的视觉化内容，帮助团队更好地理解和对齐需求
@@ -44,7 +49,7 @@ const LandingPage = ({ onEnter }) => {
 
       {/* 底部版权信息 */}
       <div className="absolute bottom-0 left-0 right-0 h-[80px] flex items-center justify-center text-white/70 text-sm z-20">
-        © 2025 NexDocs. All rights reserved.
+        © 2025 设计部-基础研发平台设计中心-研发质效和信息安全产品设计组. All rights reserved.
       </div>
     </div>
   );

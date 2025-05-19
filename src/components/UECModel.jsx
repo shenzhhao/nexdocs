@@ -84,7 +84,7 @@ const UECModel = ({ prdContent, onReset, cachedResult }) => {
     <div className="container mx-auto p-6">
       <div className="max-w-full">
         <h2 className="text-2xl font-bold mb-2 text-left">UEC模型分析结果</h2>
-        <p className="text-[18px] font-['PingFang_SC'] text-gray-500 mb-6 text-left">UEC模型帮助团队从用户(User)、事件(Event)和目标(Goal)三个维度理解需求,确保团队对需求有全面的认识。</p>
+        <p className="text-[18px] font-['PingFang_SC'] text-white mb-6 text-left">UEC模型帮助团队从用户(User)、事件(Event)和目标(Goal)三个维度理解需求,确保团队对需求有全面的认识。</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* 用户 */}
@@ -94,14 +94,14 @@ const UECModel = ({ prdContent, onReset, cachedResult }) => {
               {uecData.user && uecData.user.length > 0 ? (
                 <ul className="space-y-[5px]">
                   {uecData.user.map((item, index) => (
-                  <li key={index} className="border-b pb-3">
-                      <h4 className="font-medium text-gray-800 text-[15px]">{item.name}</h4>
-                      <p className="text-gray-600 mt-1 text-[10px]">{item.description}</p>
+                  <li key={index} className="border-b border-opacity-30 border-b-[0.5px] pb-3">
+                      <h4 className="font-medium text-white text-[15px]">{item.name}</h4>
+                      <p className="text-white mt-1 text-[10px]">{item.description}</p>
                   </li>
                 ))}
               </ul>
             ) : (
-                <p className="text-gray-500 text-[10px]">未找到用户信息</p>
+                <p className="text-white text-[10px]">未找到用户信息</p>
             )}
           </div>
           </SpotlightCard>
@@ -113,14 +113,14 @@ const UECModel = ({ prdContent, onReset, cachedResult }) => {
               {uecData.event && uecData.event.length > 0 ? (
                 <ul className="space-y-[5px]">
                   {uecData.event.map((item, index) => (
-                  <li key={index} className="border-b pb-3">
-                      <h4 className="font-medium text-gray-800 text-[15px]">{item.name}</h4>
-                      <p className="text-gray-600 mt-1 text-[10px]">{item.description}</p>
+                  <li key={index} className="border-b border-opacity-30 border-b-[0.5px] pb-3">
+                      <h4 className="font-medium text-white text-[15px]">{item.name}</h4>
+                      <p className="text-white mt-1 text-[10px]">{item.description}</p>
                   </li>
                 ))}
               </ul>
             ) : (
-                <p className="text-gray-500 text-[10px]">未找到事件信息</p>
+                <p className="text-white text-[10px]">未找到事件信息</p>
             )}
           </div>
           </SpotlightCard>
@@ -132,14 +132,14 @@ const UECModel = ({ prdContent, onReset, cachedResult }) => {
               {uecData.goal && uecData.goal.length > 0 ? (
                 <ul className="space-y-[5px]">
                   {uecData.goal.map((item, index) => (
-                    <li key={index} className="border-b pb-3">
-                      <h4 className="font-medium text-gray-800 text-[15px]">{item.name}</h4>
-                      <p className="text-gray-600 mt-1 text-[10px]">{item.description}</p>
+                    <li key={index} className="border-b border-opacity-30 border-b-[0.5px] pb-3">
+                      <h4 className="font-medium text-white text-[15px]">{item.name}</h4>
+                      <p className="text-white mt-1 text-[10px]">{item.description}</p>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500 text-[10px]">未找到目标信息</p>
+                <p className="text-white text-[10px]">未找到目标信息</p>
               )}
         </div>
           </SpotlightCard>
@@ -148,7 +148,7 @@ const UECModel = ({ prdContent, onReset, cachedResult }) => {
         <div className="mt-6 flex justify-center">
           <button
             onClick={analyzeContent}
-            className="px-4 py-2 bg-blue-600 text-white rounded-[10px] hover:bg-blue-700 mr-4"
+            className="px-4 py-2 bg-gradient-to-r from-[#3E1B70] to-[#5F26B4] text-white rounded-[10px] hover:opacity-90 transition-opacity mr-4"
           >
             重新分析
           </button>

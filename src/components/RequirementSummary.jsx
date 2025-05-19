@@ -100,20 +100,21 @@ const RequirementSummary = ({ prdContent, onReset, cachedResult }) => {
   const paragraphs = summary.split('\n\n').filter(p => p.trim());
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6 text-center text-white">需求摘要</h2>
+    <div className="container mx-auto p-6 max-w-4xl">
+      <h2 className="text-xl font-semibold mb-6 text-white text-center">需求摘要</h2>
 
       {/* Linear风格的简洁摘要卡片 */}
       {conciseSummary && (
-        <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl shadow-lg p-6 mb-6">
-          <h3 className="text-sm font-medium text-white/70 uppercase tracking-wider mb-3">一句话摘要</h3>
-          <p className="text-white text-lg font-medium leading-relaxed">{conciseSummary}</p>
+        <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-[15px] shadow-lg p-5 mb-6">
+          <h3 className="text-xs font-medium text-white/60 uppercase tracking-wider mb-2">一句话摘要</h3>
+          <p className="text-white text-base font-medium leading-relaxed">{conciseSummary}</p>
         </div>
       )}
 
       {/* Linear风格的详细摘要内容 */}
-      <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl shadow-lg p-6">
-        <div className="space-y-6">
+      <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-[15px] shadow-lg overflow-hidden">
+        <div className="p-5 space-y-4">
+          <h3 className="text-xs font-medium text-white/60 uppercase tracking-wider mb-3">详细摘要</h3>
           {paragraphs.map((paragraph, index) => {
             // 检查是否是标题行
             if (paragraph.startsWith('#')) {
@@ -121,11 +122,11 @@ const RequirementSummary = ({ prdContent, onReset, cachedResult }) => {
               const title = paragraph.replace(/^#+\s+/, '');
 
               if (level === 1) {
-                return <h3 key={index} className="text-xl font-semibold text-white/90 mt-8 mb-4">{title}</h3>;
+                return <h3 key={index} className="text-lg font-semibold text-white mt-6 mb-3">{title}</h3>;
               } else if (level === 2) {
-                return <h4 key={index} className="text-base font-medium text-white/90 mt-6 mb-3">{title}</h4>;
+                return <h4 key={index} className="text-base font-medium text-white mt-4 mb-2">{title}</h4>;
               } else {
-                return <h5 key={index} className="text-sm font-medium text-white/80 uppercase tracking-wider mt-4 mb-2">{title}</h5>;
+                return <h5 key={index} className="text-xs font-medium text-white/70 uppercase tracking-wider mt-3 mb-2">{title}</h5>;
               }
             }
 
@@ -133,8 +134,8 @@ const RequirementSummary = ({ prdContent, onReset, cachedResult }) => {
             if (/^\d+\./.test(paragraph)) {
               const items = paragraph.split('\n').filter(item => item.trim());
               if (items.length === 1) {
-                // 单个编号项作为小标题
-                return <h5 key={index} className="text-sm font-medium text-white/80 uppercase tracking-wider mt-4 mb-2">{paragraph}</h5>;
+                // 单个编号项不再作为小标题，而是作为正文显示
+                return <p key={index} className="text-white/80 text-sm leading-relaxed hover:text-white/90 transition-colors">{paragraph}</p>;
               }
             }
 
@@ -147,14 +148,14 @@ const RequirementSummary = ({ prdContent, onReset, cachedResult }) => {
 
               if (isNumberedList) {
                 return (
-                  <div key={index} className="space-y-2 mt-2">
+                  <div key={index} className="space-y-2 mt-2 pl-1">
                     {listItems.map((item, i) => {
                       const number = item.match(/^\d+/)[0];
                       const text = item.replace(/^\d+\.\s*/, '');
                       return (
-                        <div key={i} className="flex items-start">
-                          <span className="text-white/50 text-sm font-medium mr-3 mt-0.5 w-5 text-right">{number}.</span>
-                          <span className="text-white/90 text-sm">{text}</span>
+                        <div key={i} className="flex items-start group">
+                          <span className="text-white/40 text-xs font-medium mr-2.5 mt-0.5 w-4 text-right flex-shrink-0">{number}.</span>
+                          <span className="text-white/90 text-sm group-hover:text-white transition-colors">{text}</span>
                         </div>
                       );
                     })}
@@ -164,11 +165,11 @@ const RequirementSummary = ({ prdContent, onReset, cachedResult }) => {
 
               // 普通列表 (Linear风格的点状列表)
               return (
-                <div key={index} className="space-y-2 mt-2">
+                <div key={index} className="space-y-2 mt-2 pl-1">
                   {listItems.map((item, i) => (
-                    <div key={i} className="flex items-start">
-                      <span className="text-white/50 mr-3 mt-1.5">•</span>
-                      <span className="text-white/90 text-sm">{item.replace(/^[•\-*]\s*/, '')}</span>
+                    <div key={i} className="flex items-start group">
+                      <span className="text-white/40 mr-2.5 mt-1 flex-shrink-0">•</span>
+                      <span className="text-white/90 text-sm group-hover:text-white transition-colors">{item.replace(/^[•\-*]\s*/, '')}</span>
                     </div>
                   ))}
                 </div>
@@ -176,24 +177,27 @@ const RequirementSummary = ({ prdContent, onReset, cachedResult }) => {
             }
 
             // 普通段落 (Linear风格的段落)
-            return <p key={index} className="text-white/80 text-sm leading-relaxed">{paragraph}</p>;
+            return <p key={index} className="text-white/80 text-sm leading-relaxed hover:text-white/90 transition-colors">{paragraph}</p>;
           })}
         </div>
-      </div>
 
-      <div className="mt-6 text-center">
-        <button
+        {/* Linear风格的底部分隔线和按钮区域 */}
+        <div className="border-t border-white/10 p-4 bg-white/[0.03]">
+          <div className="flex justify-center">
+            <button
           onClick={generateRequirementSummary}
-          className="px-4 py-2 bg-gradient-to-r from-[#3E1B70] to-[#5F26B4] text-white rounded-[10px] hover:opacity-90 transition-opacity mr-4"
+              className="px-3 py-1.5 bg-gradient-to-r from-[#3E1B70] to-[#5F26B4] text-white text-sm rounded-[8px] hover:opacity-90 transition-opacity mr-3"
         >
           重新生成
         </button>
         <button
           onClick={onReset}
-          className="px-4 py-2 bg-gray-600 text-white rounded-[10px] hover:bg-gray-700"
+              className="px-3 py-1.5 bg-white/10 text-white text-sm rounded-[8px] hover:bg-white/15 transition-colors"
         >
           重新上传
         </button>
+      </div>
+    </div>
       </div>
     </div>
   );

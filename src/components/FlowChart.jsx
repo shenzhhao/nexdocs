@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { analyzePRDForFlowChart } from '../services/aiService';
 
 const FlowChart = ({ prdContent, onReset, cachedResult }) => {
   const [loading, setLoading] = useState(false);
@@ -6,7 +7,7 @@ const FlowChart = ({ prdContent, onReset, cachedResult }) => {
   const [error, setError] = useState(null);
 
   // 添加生成流程图的函数
-  const generateFlowChart = () => {
+  const generateFlowChart = async () => {
     if (!prdContent) {
       setError('请先输入PRD内容');
       return;
@@ -15,30 +16,26 @@ const FlowChart = ({ prdContent, onReset, cachedResult }) => {
     setLoading(true);
     setError(null);
 
-    // 模拟API调用延迟
-    setTimeout(() => {
-      try {
-        // 生成简单的流程图数据
-        const flowData = {
-          title: '设计团队执行流程图',
-          steps: [
-            { id: 1, text: '需求分析与理解' },
-            { id: 2, text: '设计方案制定' },
-            { id: 3, text: '方案评审与调整' },
-            { id: 4, text: '开发实现' },
-            { id: 5, text: '测试与验证' },
-            { id: 6, text: '交付与部署' }
-          ]
-        };
+    try {
+      // 调用aiService中的函数获取动态生成的流程图数据
+      const result = await analyzePRDForFlowChart(prdContent);
 
-        setFlowChartData(flowData);
-      } catch (err) {
-        console.error('生成流程图错误:', err);
-        setError(err.message || '生成流程图失败');
-      } finally {
-        setLoading(false);
-      }
-    }, 1500);
+      // 将API返回的步骤转换为流程图数据格式
+      const flowData = {
+        title: '设计团队执行流程图',
+        steps: result.steps.map((text, index) => ({
+          id: index + 1,
+          text: text
+        }))
+      };
+
+      setFlowChartData(flowData);
+    } catch (err) {
+      console.error('生成流程图错误:', err);
+      setError(err.message || '生成流程图失败');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

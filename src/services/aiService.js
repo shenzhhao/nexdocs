@@ -369,18 +369,58 @@ export const analyzePRD = async (prdContent) => {
   try {
     // 如果设置了appId，则调用美团大模型API
     if (appId) {
-      return await callMeituanModelForUEC(prdContent);
+      try {
+        const result = await callMeituanModelForUEC(prdContent);
+        return result;
+      } catch (apiError) {
+        console.error('调用美团大模型API失败:', apiError);
+        // 如果API调用失败，尝试从prdContent生成动态内容而不是使用静态模板
+        return generateDynamicUECData(prdContent);
+      }
     } else {
-      // 否则使用模拟数据
-      console.log('使用模拟数据 (未设置美团大模型appId)');
-  // 模拟API调用延迟
-  await new Promise(resolve => setTimeout(resolve, 1500));
-      return mockUECData;
+      // 否则使用基于输入内容的动态数据
+      console.log('使用基于输入的动态数据 (未设置美团大模型appId)');
+      // 模拟API调用延迟
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      return generateDynamicUECData(prdContent);
     }
   } catch (error) {
     console.error('分析PRD失败:', error);
     throw error;
   }
+};
+
+// 根据输入内容生成动态UEC数据
+const generateDynamicUECData = (prdContent) => {
+  // 简单的内容分析逻辑
+  const lines = prdContent.split('\n').filter(line => line.trim().length > 0);
+  const firstLine = lines[0] || '需求文档';
+
+  // 提取可能的功能点
+  const features = lines.filter(line =>
+    line.includes('功能') ||
+    /^\d+\./.test(line) || // 数字开头的行
+    line.includes('：') || line.includes(':') // 包含冒号的行
+  ).slice(0, 3);
+
+  // 生成动态UEC数据
+  return {
+    user: [
+      { name: "产品经理", description: "负责编写和维护" + firstLine.substring(0, 10) + "相关文档" },
+      { name: "设计师", description: "需要理解" + firstLine.substring(0, 10) + "的需求，转化为设计方案" },
+      { name: "开发人员", description: "实现" + firstLine.substring(0, 10) + "的功能开发" }
+    ],
+    event: [
+      { name: "导入需求", description: "用户将" + firstLine.substring(0, 10) + "导入到系统中" },
+      { name: features[0]?.substring(0, 15) || "分析需求", description: "系统分析" + firstLine.substring(0, 10) + "内容" },
+      { name: features[1]?.substring(0, 15) || "查看结果", description: "用户查看分析结果，理解需求" }
+    ],
+    goal: [
+      { name: "提高理解效率", description: "快速理解" + firstLine.substring(0, 10) + "，减少理解时间" },
+      { name: "减少沟通成本", description: "通过可视化内容，减少团队成员之间的沟通成本" },
+      { name: features[2]?.substring(0, 15) || "确保需求对齐", description: "确保团队成员对需求有一致的理解" }
+    ]
+  };
 };
 
 // 分析PRD内容并生成流程图数据
@@ -390,19 +430,81 @@ export const analyzePRDForFlowChart = async (prdContent) => {
   try {
     // 如果设置了appId，则调用美团大模型API
     if (appId) {
-      return await callMeituanModelForFlowChart(prdContent);
+      try {
+        const result = await callMeituanModelForFlowChart(prdContent);
+        return result;
+      } catch (apiError) {
+        console.error('调用美团大模型API生成流程图失败:', apiError);
+        // 如果API调用失败，尝试从prdContent生成动态内容而不是使用静态模板
+        return generateDynamicFlowChartSteps(prdContent);
+      }
     } else {
-      // 否则使用模拟数据
-      console.log('使用模拟流程图数据 (未设置美团大模型appId)');
+      // 否则使用基于输入内容的动态数据
+      console.log('使用基于输入的动态流程图数据 (未设置美团大模型appId)');
       // 模拟API调用延迟
       await new Promise(resolve => setTimeout(resolve, 1500));
-      return mockFlowChartSteps;
+      return generateDynamicFlowChartSteps(prdContent);
     }
   } catch (error) {
     console.error('分析PRD生成流程图失败:', error);
-    // 出错时也返回模拟数据
-    return mockFlowChartSteps;
+    // 出错时也返回动态生成的数据
+    return generateDynamicFlowChartSteps(prdContent);
   }
+};
+
+// 根据输入内容生成动态流程图步骤
+const generateDynamicFlowChartSteps = (prdContent) => {
+  // 简单的内容分析逻辑
+  const lines = prdContent.split('\n').filter(line => line.trim().length > 0);
+  const firstLine = lines[0] || '需求文档';
+
+  // 提取可能的功能点或流程相关内容
+  const processRelatedLines = lines.filter(line =>
+    line.includes('流程') ||
+    line.includes('步骤') ||
+    line.includes('阶段') ||
+    /^\d+\./.test(line) || // 数字开头的行
+    line.includes('：') || line.includes(':') // 包含冒号的行
+  );
+
+  // 基础流程步骤
+  const baseSteps = [
+    "需求分析与理解",
+    "设计方案制定",
+    "方案评审与调整",
+    "开发实现",
+    "测试与验证",
+    "交付与部署"
+  ];
+
+  // 如果找到了足够的流程相关内容，则使用它们
+  if (processRelatedLines.length >= 4) {
+    // 提取每行的主要内容，去除数字前缀和冒号等
+    const extractedSteps = processRelatedLines.slice(0, 6).map(line => {
+      // 去除数字前缀、冒号等
+      return line.replace(/^\d+[\.\、\:]?\s*/, '')
+                .replace(/.*[：:]\s*/, '')
+                .substring(0, 20); // 限制长度
+    });
+
+    return { steps: extractedSteps };
+  }
+
+  // 否则，基于文档内容修改基础流程步骤
+  const customizedSteps = baseSteps.map((step, index) => {
+    // 为前两个步骤添加文档相关的内容
+    if (index === 0) {
+      return `${firstLine.substring(0, 10)}需求分析`;
+    }
+    if (index === 1 && processRelatedLines[0]) {
+      return processRelatedLines[0].replace(/^\d+[\.\、\:]?\s*/, '')
+                                  .replace(/.*[：:]\s*/, '')
+                                  .substring(0, 20);
+    }
+    return step;
+  });
+
+  return { steps: customizedSteps };
 };
 
 // 生成流程图 - 使用模拟数据

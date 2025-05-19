@@ -197,7 +197,11 @@ const Index = ({ onBack }) => {
         {/* 顶部标题 */}
         <div className="h-16 flex items-center px-4 border-b border-gray-800">
           <div className="flex items-center gap-2">
-            <span className="text-gray-400">logo</span>
+            <img
+              src="/logo.svg"
+              alt="NexDocs Logo"
+              className="w-8 h-8"
+            />
             <h1 className="text-base font-medium text-white">NexDocs</h1>
           </div>
         </div>
@@ -289,7 +293,7 @@ const Index = ({ onBack }) => {
                 historyDialogs.map(dialog => (
                   <div
                     key={dialog.id}
-                    className={"flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-lg cursor-pointer hover:bg-[#3E1B70] hover:text-white " + (currentDialogId === dialog.id ? 'bg-gray-800' : '')}
+                    className={"flex items-center gap-2 px-4 py-2 text-sm text-gray-300 rounded-[15px] cursor-pointer hover:bg-[#291151] hover:text-white " + (currentDialogId === dialog.id ? 'bg-gray-800' : '')}
                     onClick={() => loadHistoryDialog(dialog.id)}
                   >
                     <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 16 16" fill="none">
