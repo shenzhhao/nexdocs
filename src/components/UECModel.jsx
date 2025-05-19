@@ -94,7 +94,7 @@ const UECModel = ({ prdContent, onReset, cachedResult }) => {
               {uecData.user && uecData.user.length > 0 ? (
                 <ul className="space-y-[5px]">
                   {uecData.user.map((item, index) => (
-                  <li key={index} className="border-b border-opacity-30 border-b-[0.5px] pb-3">
+                  <li key={index} className="border-b border-white/5 border-b-[0.5px] pb-3">
                       <h4 className="font-medium text-white text-[15px]">{item.name}</h4>
                       <p className="text-white mt-1 text-[10px]">{item.description}</p>
                   </li>
@@ -113,7 +113,7 @@ const UECModel = ({ prdContent, onReset, cachedResult }) => {
               {uecData.event && uecData.event.length > 0 ? (
                 <ul className="space-y-[5px]">
                   {uecData.event.map((item, index) => (
-                  <li key={index} className="border-b border-opacity-30 border-b-[0.5px] pb-3">
+                  <li key={index} className="border-b border-white/5 border-b-[0.5px] pb-3">
                       <h4 className="font-medium text-white text-[15px]">{item.name}</h4>
                       <p className="text-white mt-1 text-[10px]">{item.description}</p>
                   </li>
@@ -132,7 +132,7 @@ const UECModel = ({ prdContent, onReset, cachedResult }) => {
               {uecData.goal && uecData.goal.length > 0 ? (
                 <ul className="space-y-[5px]">
                   {uecData.goal.map((item, index) => (
-                    <li key={index} className="border-b border-opacity-30 border-b-[0.5px] pb-3">
+                    <li key={index} className="border-b border-white/5 border-b-[0.5px] pb-3">
                       <h4 className="font-medium text-white text-[15px]">{item.name}</h4>
                       <p className="text-white mt-1 text-[10px]">{item.description}</p>
                     </li>
